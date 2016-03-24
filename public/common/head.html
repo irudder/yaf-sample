@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title><?php echo $title?></title>
+        <style>
+            *,body{margin:0px;padding:0px;}
+            .menu{margin:10px;}
+            .top{width:100%; height:50px; background-color:black; color:white; line-height:50px;}
+            .top .logout{float:right;color:red;margin-right:5%}
+            .left{widht:100px;height:730px;background-color: rgba(0, 0, 0, 0.63); float:left; overflow:hidden}
+            .menu li{margin-top:20px; list-style:none}
+            .menu li a{color:blue; text-decoration:none}
+            .menu li a:hover{color:white}
+        </style>
+    </head>
+    <body>
+        <div class='top'>
+            <span >你好<b style='color:red'><?php echo $user;?></b>,欢迎登录你的管理后台</span>
+            <a href="/user/logout" class='logout'>退出</a>
+        </div>
+        <!--
+        <div style="widht:100px;height:730px;background-color: rgba(0, 0, 0, 0.63); float:left; overflow:hidden">
+            <ul class='menu'>
+                <li><a href="#">个人资料</a></li>
+                <li><a href="#">修改密码</a></li>
+            </ul>
+        </div>
+    </body>
+</html>-->

@@ -1,0 +1,63 @@
+-- phpMyAdmin SQL Dump
+-- version phpStudy 2014
+-- http://www.phpmyadmin.net
+--
+-- 主机: localhost
+-- 生成日期: 2016 年 03 月 24 日 14:39
+-- 服务器版本: 5.5.40
+-- PHP 版本: 5.4.33
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- 数据库: `yuser`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uname` varchar(50) NOT NULL,
+  `pwd` varchar(50) NOT NULL,
+  `relname` varchar(50) NOT NULL,
+  `IDcard` varchar(20) NOT NULL,
+  `regtime` varchar(20) NOT NULL,
+  `regip` varchar(20) NOT NULL,
+  `lastip` varchar(20) NOT NULL,
+  `lasttime` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+
+--
+-- 转存表中的数据 `user`
+--
+
+INSERT INTO `user` (`id`, `uname`, `pwd`, `relname`, `IDcard`, `regtime`, `regip`, `lastip`, `lasttime`) VALUES
+(1, 'test', '123', 'test', '123', '123', '123', '123', '123'),
+(2, '123123', '4297f44b13955235245b2497399d7a93', '123', '111111111111111111', '1458716066', '172.16.67.122', '172.16.67.122', '1458716066'),
+(3, '123123', '4297f44b13955235245b2497399d7a93', '123', '111111111111111111', '1458716069', '172.16.67.122', '172.16.67.122', '1458716069'),
+(4, 'qqqq', '3bad6af0fa4b8b330d162e19938ee981', 'qq', '111111111111111111', '1458717724', '172.16.67.122', '172.16.67.122', '0'),
+(5, 'wwww', 'e34a8899ef6468b74f8a1048419ccc8b', 'wwww', '111111111111111111', '1458719089', '127.0.0.1', '127.0.0.1', '1458719089'),
+(6, 'aaaa', '202cb962ac59075b964b07152d234b70', 'aaaa', '111111111111111111', '1458719284', '127.0.0.1', '172.16.67.124', '1458794636'),
+(7, 'bbbb', '74b87337454200d4d33f80c4663dc5e5', 'aaaa', '111111111111111111', '1458719387', '127.0.0.1', '127.0.0.1', '1458719387'),
+(8, 'cccc', '74b87337454200d4d33f80c4663dc5e5', 'aaaa', '111111111111111111', '1458719501', '127.0.0.1', '127.0.0.1', '1458719501'),
+(9, 'dddd', '74b87337454200d4d33f80c4663dc5e5', 'aaaa', '111111111111111111', '1458719527', '127.0.0.1', '127.0.0.1', '1458719527'),
+(10, 'eeee', '74b87337454200d4d33f80c4663dc5e5', 'aaaa', '111111111111111111', '1458719615', '127.0.0.1', '127.0.0.1', '1458719615'),
+(11, 'ffff', 'ffff', 'aaaa', '111111111111111111', '1458719650', '127.0.0.1', '127.0.0.1', '0'),
+(12, 'test1', '4297f44b13955235245b2497399d7a93', 'test1', '123123123123123123', '1458724856', '172.16.67.45', '172.16.67.45', '1458724856'),
+(13, '1111', 'b59c67bf196a4758191e42f76670ceba', '1111', '111111111111111111', '1458725944', '172.16.67.122', '172.16.67.122', '1458725944');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,0 +1,13 @@
+<?php include "/public/common/head.html";?>
+<?php include "/public/common/left.html";?>
+<div> 
+    <table>
+        <tr>
+            <td>用户名</td><td>真实名字</td><td>上次登录时间</td><td>上次登录ip</td>
+        <tr/>
+        <tr>
+            <td><?php echo $userdata['uname'];?></td><td><?php echo $userdata['relname'];?></td><td><?php echo date("Y/m/d H:s:i",$userdata['lasttime']);?></td><td><?php echo $userdata['lastip'];?></td>
+        <tr/>
+    <table>
+<div>
+<?php include "/public/common/foot.html";?>
