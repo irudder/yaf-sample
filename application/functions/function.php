@@ -6,6 +6,105 @@
         var_dump($val);
         exit;
     }
+    //检查用户名
+    function valiUsername($username)
+    {
+        if(!$username && strlen($username)>20){
+            return false;
+        }
+        return $username;
+        //TODO 手机验证 邮箱认证。。。
+    }
+    //检查realname
+    function valiRealname($realname)
+    {
+        if(!$realname && strlen($realname)>20){
+            return false;
+        }
+        return $realname;
+    }
+    //检查pwd
+    function valiPwd($pwd)
+    {
+        if(!$pwd && strlen($pwd)>20){
+            return false;
+        }
+        return $pwd;
+    }
+    //检查idcard
+    function valiIdcard($idcard)
+    {
+        if(strlen($idcard)!=18 && preg_match('/d{17}([0-9]|x)$/',$idcard)){
+            return false;
+        }
+        return $idcard;
+    }
+        //php跳转
+    function gotourl($t=0, $url='/')
+    {
+        $url = "http://".$_SERVER['HTTP_HOST']."/".$url;
+        if($t==0){
+            $go = "Location:".$url;
+        }else{
+            $go = "refresh:".$t.";url=".$url;
+        }
+        header($go);
+        exit;
+    }
+    //设置memcache
+    function getmem($key)
+    {
+        $mem = new Memcache;
+        $mem->connect('127.0.0.1',11211);
+        return $mem->get($key);
+    }
+    //获取memcache
+    function setmem($key, $val, $flag=false, $t=86400)
+    {
+        $t = $t*7;//一周
+        $mem = new Memcache;
+        $mem->connect('127.0.0.1',11211);
+        return $mem->set($key, $val, $flag,$t);
+    }
+    //替换memcache
+    function replacemem($key, $val, $flag=false, $t=86400)
+    {
+        $t = $t*7;//一周
+        $mem = new Memcache;
+        $mem->connect('127.0.0.1',11211);
+        return $mem->replace($key, $val, $flag,$t);
+    }
+    function getSession($key)
+    {
+        return Yaf_Session::getInstance()->__get($key);
+    }
+
+    function setSession($key, $val)
+    {
+        return Yaf_Session::getInstance()->__set($key, $val);
+    }
+
+    function unsetSession($key)
+    {
+        return Yaf_Session::getInstance()->__unset($key);
+    }
+    
+    function clearCookie($key)
+    {
+        //echo $key."<br>";
+        setcookie($key,'',time()-3600,'/');
+    }
+
+    function putCookie($key, $value, $expire = 3600, $path = '/', $domain = '', $httpOnly = FALSE)
+    {
+        setCookie($key, $value, time() + $expire, $path, $domain, $httpOnly);
+    }
+
+    function getCookie($key)
+    {
+        //echo $key;exit;
+        return trim($_COOKIE[$key]);
+    }
     /**
      * 对字符串等进行过滤
      */

@@ -1,7 +1,8 @@
 <?php
-class LogicController extends Yaf_Controller_Abstract
+namespace logic\logic;
+class LogicController 
 {
-    function function test()
+    public function test()
     {
         hc(1);
     }

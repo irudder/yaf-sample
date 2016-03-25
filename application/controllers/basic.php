@@ -4,19 +4,19 @@ class basicController extends Yaf_Controller_Abstract
 {
     public function init()
     {
-        yaf_Loader::import(APP_PATH.'/application/functions/function.php');
+        //yaf_Loader::import(APP_PATH.'/application/functions/function.php');
     }
     
     //判断是否自动登录
     public function flag()
     {
         $flag =0;
-        if($this->getSession("uid"))
+        if(getSession("uid"))
         {
-            $uid =$this->getSession("uid");
+            $uid =getSession("uid");
             $flag=1;
-        }elseif($this->getCookie("uid")){
-            $uid =$this->getCookie("uid");
+        }elseif(getCookie("uid")){
+            $uid =getCookie("uid");
             $flag=1;
         }else{
             $flag=0;
@@ -24,28 +24,29 @@ class basicController extends Yaf_Controller_Abstract
         if($flag==1)
         {
             $token_key = md5($uid.'token');
-            $token_c = $this->getCookie($token_key);
-            $token_m = $this->getmem($token_key);
+            $token_c = getCookie($token_key);
+            $token_m = getmem($token_key);
             if($token_c===$token_m){
-                if(!$this->getSession("uid")){
+                if(!getSession("uid")){
                     //未登录时重新登录
                     $user = new UserModel();
                     $udata = $user->getuserinfo($uid);
                     //var_dump($udata);exit;
-                    $this->setSession('uname',$udata['uname']);
-                    $this->setSession('uid',$uid);
+                    setSession('uname',$udata['uname']);
+                    setSession('uid',$uid);
                     //记录上次登录ip以及时间
-                    $this->replacemem($udata['id'].'lasttime',$udata['lasttime']);
-                    $this->replacemem($udata['id'].'lastip',$udata['lastip']);
+                    replacemem($udata['id'].'lasttime',$udata['lasttime']);
+                    replacemem($udata['id'].'lastip',$udata['lastip']);
                 }
                 
             }else{
-                $this->unsetSession('uname');
-                $this->unsetSession("uid");
+                unsetSession('uname');
+                unsetSession("uid");
             }
         }        
         
     }
+    /*
     //设置memcache
     public function getmem($key)
     {
@@ -69,6 +70,7 @@ class basicController extends Yaf_Controller_Abstract
         $mem->connect('127.0.0.1',11211);
         return $mem->replace($key, $val, $flag,$t);
     }
+    
     //php跳转
     public function gotourl($t=0, $url='/')
     {
@@ -100,12 +102,12 @@ class basicController extends Yaf_Controller_Abstract
     public function clearCookie($key)
     {
         //echo $key."<br>";
-        setcookie($key,'',time()-3600,'/');
+        putCookie($key,'',time()-3600,'/');
     }
 
-    public function setCookie($key, $value, $expire = 3600, $path = '/', $domain = '', $httpOnly = FALSE)
+    public function putCookie($key, $value, $expire = 3600, $path = '/', $domain = '', $httpOnly = FALSE)
     {
-        setCookie($key, $value, time() + $expire, $path, $domain, $httpOnly);
+        putCookie($key, $value, time() + $expire, $path, $domain, $httpOnly);
     }
 
     public function getCookie($key)
@@ -113,4 +115,5 @@ class basicController extends Yaf_Controller_Abstract
         //echo $key;exit;
         return trim($_COOKIE[$key]);
     }
+    */
 }

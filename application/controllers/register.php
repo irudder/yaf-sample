@@ -11,7 +11,18 @@ class RegisterController extends BasicController
     }
     public function doregAction() 
     {
+        $data['uname'] = filterStr($_POST['username']);
+        $data['pwd'] = filterStr($_POST['password']);
+        $data['realname'] = filterStr($_POST['realname']);
+        $data['idcard'] = filterStr($_POST['idcard']);
+        $reg = new logic\LogicController;
+        $res = $reg->reg($data);
+        echo $res;
+        exit;
+        
+        
         //验证
+        /*
         if($_POST['username']=='' || $_POST['password']=='' || $_POST['realname']==''|| $_POST['idcard']=='' ){
             $arr['code'] = -400;
             $arr['msg']  = "非法操作，请正确填写。";
@@ -40,18 +51,18 @@ class RegisterController extends BasicController
                 
                 $udata = $user->checkuserinfo($m['uname'],$m['pwd']);
                 //var_dump($udata);exit;
-                /**注册免登陆**/
-                $this->setSession('uname',$udata['uname']);
-                $this->setSession('uid',$udata['id']);
-                $this->setcookie("uid", $udata['id'], 3600*24*7);
+                //**注册免登陆
+                setSession('uname',$udata['uname']);
+                setSession('uid',$udata['id']);
+                putCookie("uid", $udata['id'], 3600*24*7);
                 //加密的token用作比较是否修改密码
                 $token_key = md5($udata['id'].'token');
                 $token_val = md5($udata['id'].''.$udata['pwd']);
-                $this->setcookie($token_key, $token_val, 3600*24*7);
-                $this->setmem($token_key, $token_val);
+                putCookie($token_key, $token_val, 3600*24*7);
+                setmem($token_key, $token_val);
                 //记录登录ip以及时间
-                $this->setmem($udata['id'].'lasttime',$udata['lasttime']);
-                $this->setmem($udata['id'].'lastip',$udata['lastip']);
+                setmem($udata['id'].'lasttime',$udata['lasttime']);
+                setmem($udata['id'].'lastip',$udata['lastip']);
                 
             }else{
                 $arr['code'] = -1;
@@ -60,5 +71,6 @@ class RegisterController extends BasicController
         }
         echo json_encode($arr);
         exit;
+        */
     }
 }
