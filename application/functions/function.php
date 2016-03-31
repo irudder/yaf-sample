@@ -1,5 +1,6 @@
 <?php
     //print
+    header('Content-type:text/html;charset=utf-8');
     function hc($val)
     {
         echo "<pre>";
@@ -50,6 +51,14 @@
         }
         header($go);
         exit;
+    }
+    //true则刷新页面，false则返回上一页
+    function reloadpage($flag=true){
+        if($flag){
+            echo "<script>window.location.reload();</script>";
+        }else{
+            echo "<script>window.history.go(-1)</script>";
+        }
     }
     //设置memcache
     function getmem($key)
@@ -166,3 +175,29 @@
         return $arr;
     }
     /**对字符串等进行过滤 end **/
+    
+    function array_column($input, $columnKey, $indexKey = null) {
+        $columnKeyIsNumber = (is_numeric($columnKey)) ? true : false;
+        $indexKeyIsNull = (is_null($indexKey)) ? true : false;
+        $indexKeyIsNumber = (is_numeric($indexKey)) ? true : false;
+        $result = array();
+        foreach ((array) $input as $key => $row) {
+            if ($columnKeyIsNumber) {
+                $tmp = array_slice($row, $columnKey, 1);
+                $tmp = (is_array($tmp) && !empty($tmp)) ? current($tmp) : null;
+            } else {
+                $tmp = isset($row[$columnKey]) ? $row[$columnKey] : null;
+            }
+            if (!$indexKeyIsNull) {
+                if ($indexKeyIsNumber) {
+                    $key = array_slice($row, $indexKey, 1);
+                    $key = (is_array($key) && !empty($key)) ? current($key) : null;
+                    $key = is_null($key) ? 0 : $key;
+                } else {
+                    $key = isset($row[$indexKey]) ? $row[$indexKey] : 0;
+                }
+            }
+            $result[$key] = $tmp;
+        }
+        return $result;
+    }

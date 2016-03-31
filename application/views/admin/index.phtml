@@ -1,0 +1,18 @@
+<?php include "common/head.html";?>
+<div class='container'>
+    <div><a href='/index.php/admin/addbank'><button class='btn btn-primary'>新增银行</button></a></div>
+    <table class="table table-bordered table-striped table-hover">
+        <tr class="success">
+            <td>银行名</td>
+            <td>银行代码</td>
+            <td>银行信息</td>
+            <td>操作</td>
+        </tr>
+        
+        <?php foreach($data as $key=>$val){ 
+                echo "<tr><td>".$val['bname']."</td><td>".$val['bmark']."</td><td>".$val['binfo']."</td><td><a href='/index.php/admin/editbank/bid/{$val["bid"]}'<button class='btn'>编辑</button></a></td></tr>";
+            } 
+        ?>
+    </table>
+</div>
+<?php include "common/foot.html";?>

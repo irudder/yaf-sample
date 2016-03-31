@@ -1,0 +1,49 @@
+<?php include "common/head.html";?>
+<div class='container'>
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="ordertype">
+                订单类型名
+            </label>
+            <div class="controls">
+                <input type="text" id="ordertype" name='ordertype' value='<?php echo $data['type']; ?>' placeholder="ordertype">
+            </div>
+        </div>
+        <input type='hidden' value='<?php echo $data['id']; ?>' name='typeid' id='typeid' >
+        <div class="control-group">
+            <div class="controls">
+                <button type="button" class="btn">
+                   保存
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $('.btn').click(function(){
+        if($('#ordertype').val()==''){
+            alert("请全部填写");
+            return false;
+        }
+        var url = '/index.php/admin/addtype';
+        if($('input[name=odertype]').val()!=''){
+            url = '/index.php/admin/addtype';
+        }        
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                typeid  : $('#typeid').val(),
+                ordertype  : $('#ordertype').val(),
+            },
+            dataType: 'json',
+            success: function(data){
+                alert(data.msg);
+                if(data.code==5){
+                    window.location.reload();
+                }         
+            }
+        })
+    })
+</script>
+<?php include "common/foot.html";?>

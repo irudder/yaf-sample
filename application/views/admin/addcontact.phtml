@@ -1,0 +1,115 @@
+<?php include "common/head.html";?>
+<div class='container'>
+    <div class="form-group">
+        <select class="form-control" name='bank' id="bank">
+            <option value='0'>请选择银行</option>
+            <?php foreach($data['bank'] as $key=>$val){
+                echo "<option value='{$val['bmark']}'>{$val['bname']}</option>";
+            }?>
+        </select>
+        <select class="form-control" name='payprovider' id='payprovider'>
+            <option value='0'>请选择支付商</option>
+            <?php foreach($data['pay'] as $key=>$val){
+                echo "<option value='{$val['pmark']}'>{$val['pname']}</option>";
+            }?>
+        </select>
+        <select class="form-control" name='ordertype' id='ordertype'>
+            <option value='0'>请选择所属订单类型</option>
+            <?php foreach($data['ordertype'] as $key=>$val){
+                echo "<option value='{$val['type']}'>{$val['type']}</option>";
+            }?>
+            <option value='0'>无</option>
+        </select>
+        <input type="text" style='width:12%' id="quota" name='quota' value='' placeholder="限制额度(默认无)">
+        <button type="button" id='addcontact' class="btn btn-deafult">新增通道</button>
+    </div>
+    
+    <table class="table table-bordered table-striped table-hover">
+        <tr class="success">
+            <td>支付商通道</td>
+            <td>银行名</td>
+            <td>订单类型</td>
+            <td>限额</td>
+            <td>手续费</td>
+            <td>操作</td>
+        </tr>
+        
+        <?php foreach($data['contact'] as $key=>$val){
+            echo "<tr><td>".$val['pname']."</td><td>".$val['bname']."</td>";
+            if($val['ordertype']=='0' || $val['ordertype']=='-1' || $val['ordertype']=='')
+            {
+                //echo "<td>".$val['ordertype']."</td>";
+                echo "<td style='color:#cccccc'>未指定类型</td>";
+            }else{
+                echo "<td>".$val['ordertype']."</td>";
+            }
+            echo "<td>".$val['quota']."</td><td>".$val['poundage']."%</td>";
+            if($val['is_show']==1){ 
+                echo "<td><button class='btn' name='toshow' flag='{$val['is_show']}' pid='{$val['id']}' >已开放</button></td></tr>";
+            }else{
+                echo "<td><button class='btn' name='toshow' flag='{$val['is_show']}' pid='{$val['id']}' >已关闭</button></td></tr>";
+            }
+        }?>
+    </table>
+</div>
+
+<script>
+$('#addcontact').click(function(){
+    //alert($('#bank').val())
+    if($('#bank').val()==0 || $('#payprovider').val()==0){
+        alert("支付商与银行是必选类型");
+        return false;
+    }
+    var url = '/index.php/admin/addcontact';
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: {
+            bankmark  : $('#bank').val(),
+            paymark: $('#payprovider').val(),
+            ordertype: $('#ordertype').val(),
+            quota: $('#quota').val()
+        },
+        dataType: 'json',
+        success: function(data){
+            alert(data.msg);
+            if(data.code==5){
+                window.location.reload();
+            }
+        }
+    })
+})
+//TODO
+$('button[name=toshow]').click(function(){
+    var _this = $(this);
+    var url = '/index.php/admin/closepay';
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: {
+            pid: $(this).attr('pid'),
+            flag: $(this).attr('flag'),
+        },
+        dataType: 'json',
+        success: function(data){
+            //alert(data.msg);
+            if(data.code==4){
+                //window.location.reload();
+                if(_this.attr('flag')==1){
+                    _this.text('已关闭');
+                    _this.attr('flag',0);
+                }else{
+                    _this.text('已开放');
+                    _this.attr('flag',1);
+                }
+                
+            }else{
+                alert(data.msg)
+            }
+        }
+    })
+})
+
+</script>
+
+<?php include "common/foot.html";?>

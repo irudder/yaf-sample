@@ -1,0 +1,53 @@
+<?php include "common/head.html";?>
+<div class='container'>
+    <table class="table table-bordered table-striped table-hover">
+        <tr class="success">
+            <td>用户名</td>
+            <td>realname</td>
+            <td>身份证号</td>
+            <td>上次登录ip</td>
+            <td>上次登录时间</td>
+            <td style='width:10%'>手续费</td>
+            <td>操作</td>
+        </tr>
+        
+        <?php foreach($data as $key=>$val){
+                echo "<tr><td>".$val['uname']."</td><td>".$val['relname'].
+                "</td><td>".$val['IDcard']."</td><td>".
+                $val['lastip']."</td><td>".date('Y-m-d H:s',$val['lasttime']).
+                "</td><td><input type='text' style='width:80%' name='poundage' uid='{$val['id']}' poundage='{$val['poundage']}' value='{$val['poundage']}'>%".
+                "</td><td><button class='btn'>编辑</button></td></tr>";
+            } 
+        ?>
+    </table>
+</div>
+
+<script>
+    $('input[name=poundage]').blur(function(){
+        if($(this).val()>=100 || $(this).val()<0 || isNaN($(this).val()) ){
+            alert('请输入0-100的值');
+            $(this).val($(this).attr('poundage'));
+            return false;
+        }
+        /* if($(this).val()==0){
+            return false;
+        } */
+        var url = '/index.php/admin/edituserinfo';
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                poundage  : $(this).val(),
+                uid  : $(this).attr('uid'),
+            },
+            dataType: 'json',
+            success: function(data){
+                //alert(data.msg);
+                if(data.code==5){
+                    window.location.reload();
+                }
+            }
+        })
+    })
+</script>
+<?php include "common/foot.html";?>

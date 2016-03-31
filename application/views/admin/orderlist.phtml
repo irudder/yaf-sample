@@ -1,0 +1,51 @@
+<?php include "common/head.html";?>
+<style>
+    .pagination{list-style:none;}
+    .pagination li{float:left; margin-left:2%; margin-bottom:20px; }
+</style>
+<div class='container'>
+    <table class="table table-bordered table-striped table-hover">
+        <tr class="success">
+            <td>订单编号</td>
+            <td>订单金额</td>
+            <td>订单类型</td>
+            <td>订单支付银行</td>
+            <td>订单支付商</td>
+            <td>需支付手续费</td>
+            <td>订单用户</td>
+        </tr>
+        
+        <?php 
+            foreach($data['pagedata'] as $key=>$val){ 
+                echo "<tr><td>".$val['onum']."</td><td>".$val['omoney']."</td>";
+                if($val['otype']=='' || $val['otype']=='0' || $val['otype']=='-1'){
+                    echo "<td style='color:#cccccc'>未指定</td>";
+                }else{
+                    echo "<td>".$val['otype']."</td>";
+                }
+                echo "<td>".$val['opaybank']."</td><td>".$val['opayprovider']."</td><td>".$val['opoundage']."</td><td>".$val['ouser']."</td></tr>";
+            } 
+        ?>
+    </table>
+    <ul class="pagination">
+        <?php
+            if($data['descpage']>1){
+                $data['descpage'] -= 1;
+            }
+            echo "<li><a href='/index.php/admin/orderlist/page/{$data['descpage']}'>&laquo;</a></li>";
+            for($i=1;$i<=$data['maxpage'];$i++){
+                if($data['nowpage']==$i){
+                    echo "<li><a style='text-decoration:underline' href='/index.php/admin/orderlist/page/{$i}'>{$i}</a></li>";
+                }else{
+                    echo "<li><a href='/index.php/admin/orderlist/page/{$i}'>{$i}</a></li>";
+                }
+            }
+            if($data['addpage']<$data['maxpage']){
+                $data['addpage'] += 1;
+            }
+            
+            echo "<li><a href='/index.php/admin/orderlist/page/{$data['addpage']}'>&raquo;</a></li>";
+        ?>
+    </ul>
+</div>
+<?php include "common/foot.html";?>

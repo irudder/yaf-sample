@@ -1,0 +1,76 @@
+<?php include "common/head.html";?>
+<div class='container'>
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="payname">
+                支付商名
+            </label>
+            <div class="controls">
+                <input type="text" id="payname" name='payname' value='<?php echo $data['pname']; ?>' placeholder="payname">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="paymark">
+                支付商代码
+            </label>
+            <div class="controls">
+                <input type="text" id="paymark" name='paymark' value='<?php echo $data['pmark']; ?>' placeholder="paymark">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="quota">
+                支付商限额
+            </label>
+            <div class="controls">
+                <input type="text" id="quota" name='quota' value='<?php echo $data['quota']; ?>' placeholder="默认0为不限额度">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="poundage">
+                支付商手续费
+            </label>
+            <div class="controls">
+                <input type="text" id="poundage" name='poundage' value='<?php echo $data['poundage']; ?>'>
+            </div>
+        </div>
+        <input type='hidden' value='<?php echo $data['pid']; ?>' name='payid' id='payid' >
+        <div class="control-group">
+            <div class="controls">
+                <button type="button" class="btn">
+                   保存
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $('.btn').click(function(){
+        if($('#payname').val()=='' || $('#paymark').val()=='' || $('#quota').val()=='' || $('#poundage').val()==''){
+            alert("请全部填写");
+            return false;
+        }
+        var url = '/index.php/admin/addpay';
+        if($('input[name=payid]').val()!=''){
+            url = '/index.php/admin/editpay';
+        }        
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                payid  : $('#payid').val(),
+                payname: $('#payname').val(),
+                paymark: $('#paymark').val(),
+                quota: $('#quota').val(),
+                poundage: $('#poundage').val(),
+            },
+            dataType: 'json',
+            success: function(data){
+                alert(data.msg);
+                if(data.code==5){
+                    window.location.reload();
+                }         
+            }
+        })
+    })
+</script>
+<?php include "common/foot.html";?>

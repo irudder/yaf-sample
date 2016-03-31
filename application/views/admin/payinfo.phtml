@@ -1,0 +1,49 @@
+<?php include "common/head.html";?>
+<div class='container'>
+    <div><a href='/index.php/admin/addpay'><button class='btn btn-primary'>新增支付商</button></a></div>
+    <table class="table table-bordered table-striped table-hover">
+        <tr class="success">
+            <td>支付商名</td>
+            <td>支付商代码</td>
+            <td style='width:20%'>支付商限额</td>
+            <td>支付商手续费</td>
+            <td>操作</td>
+        </tr>
+        
+        <?php foreach($data as $key=>$val){ 
+                echo "<tr><td>".$val['pname']."</td><td>".$val['pmark'].
+                "</td><td><input type='text' style='width:60%' name='quota' pid='{$val['pid']}' quota='{$val['quota']}' value='{$val['quota']}'></td><td>".
+                $val['poundage']."%</td><td><a href='/index.php/admin/editpay/pid/{$val["pid"]}'<button class='btn'>编辑</button></a></td></tr>";
+            } 
+        ?>
+    </table>
+</div>
+<script>
+    $('input[name=quota]').blur(function(){
+        if($(this).val()<0 || isNaN($(this).val()) ){
+            alert('请输入不小于零的值');
+            $(this).val($(this).attr('quota'));
+            return false;
+        }
+        /* if($(this).val()==0){
+            return false;
+        } */
+        var url = '/index.php/admin/editquota';
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                quota  : $(this).val(),
+                pid  : $(this).attr('pid'),
+            },
+            dataType: 'json',
+            success: function(data){
+                //alert(data.msg);
+                if(data.code==5){
+                    window.location.reload();
+                }
+            }
+        })
+    })
+</script>
+<?php include "common/foot.html";?>

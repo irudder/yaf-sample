@@ -7,8 +7,8 @@ class CommonModel extends Sql
         $con::con('127.0.0.1', 'root', 'root');
         $con::select_db("yuser"); */
         $con=Sql::get_class_sql();
-        $res = $con::query($sql);
-        $res = $con::fetch_array($res);
+        $query = $con::query($sql);
+        $res = $con::fetch_array($query);
         return $res;
     }
     protected function dosql($sql)
@@ -17,7 +17,17 @@ class CommonModel extends Sql
         $con::con('127.0.0.1', 'root', 'root');
         $con::select_db("yuser"); */
         $con=Sql::get_class_sql();
-        $res = $con::query($sql);
-        return $res;
+        $query = $con::query($sql);
+        return $query;
+    }
+    protected function selectall($sql)
+    {
+        $con=Sql::get_class_sql();
+        $query = $con::query($sql);
+        $temp=array();
+        while($res=mysql_fetch_assoc($query)) {
+            $temp[]=$res;
+        }
+        return $temp;
     }
 }

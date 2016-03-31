@@ -1,0 +1,82 @@
+<?php include "/public/common/head.html";?>
+<?php include "/public/common/left.html";?>
+<form method='post' action='/user/orderres'>
+    <div>随机订单号:<input name='ordernum' type='text' value="<?php echo md5(time());?>"  /></div>
+    <div>
+        <select class="form-control" name='ordertype' id='ordertype'>
+            <option value='0'>所属订单类型</option>
+            <?php foreach($data['ordertype'] as $key=>$val){
+                echo "<option value='{$val['type']}'>{$val['type']}</option>";
+            }?>
+        </select>
+        <input  type="text" style='width:12%' id="money" name='money' value='' placeholder="订单金额">
+        <select class="form-control" name='bank' id="bank">
+            <option value='0'>请选择银行</option>
+            <?php foreach($data['bank'] as $key=>$val){
+                echo "<option value='{$val['bmark']}'>{$val['bname']}</option>";
+            }?>
+        </select>
+    <div>
+    <button type="submit" id='orderpay' class="btn btn-deafult">订单支付</button>
+</form>
+
+<script>
+//页面加载时判断可以选择的银行（防止返回出现多数银行//后台应判断当前订单是否有该银行通道）
+$(function(){
+    $.ajax({
+        url: '/user/getbank',
+        type: "POST",
+        data: {
+            typeval: $('#ordertype').val(),
+            ordermoney: $('#money').val(),
+        },
+        dataType: 'json',
+        success: function(data){
+            //alert(data.msg);
+                var str="<option value='0'>请选择银行</option>";
+                $.each(data.msg,function(k,v){
+                    //alert(k+'--'+v)
+                    str += "<option value='"+k+"'>"+v+"</option>"
+                })
+                //alert(str);
+                $('#bank').find('option').remove();
+                $('#bank').append(str);
+        }
+    })
+})
+
+$('#ordertype').change(function(){
+    //alert(1)
+    $.ajax({
+        url: '/user/getbank',
+        type: "POST",
+        data: {
+            typeval: $('#ordertype').val(),
+            ordermoney: $('#money').val(),
+        },
+        dataType: 'json',
+        success: function(data){
+            //alert(data.msg);
+                var str="<option value='0'>请选择银行</option>";
+                $.each(data.msg,function(k,v){
+                    //alert(k+'--'+v)
+                    str += "<option value='"+k+"'>"+v+"</option>"
+                })
+                //alert(str);
+                $('#bank').find('option').remove();
+                $('#bank').append(str);
+        }
+    })
+})
+
+$('#orderpay').on('click',function(){
+    if($('#bank').val()==0 || $('#money').val()<=0 || isNaN($('#money').val()))
+    {
+        alert('银行，金额为必填');
+        return false;
+    }
+
+})
+</script>
+
+<?php include "/public/common/foot.html";?>

@@ -1,9 +1,9 @@
 <?php
-header("Content-type:text/html;char-set=utf-8");
 class basicController extends Yaf_Controller_Abstract
 {
     public function init()
     {
+        header('Content-type:text/html;charset=utf-8');
         //yaf_Loader::import(APP_PATH.'/application/functions/function.php');
     }
     
@@ -46,74 +46,36 @@ class basicController extends Yaf_Controller_Abstract
         }        
         
     }
-    /*
-    //设置memcache
-    public function getmem($key)
-    {
-        $mem = new Memcache;
-        $mem->connect('127.0.0.1',11211);
-        return $mem->get($key);
-    }
-    //获取memcache
-    public function setmem($key, $val, $flag=false, $t=86400)
-    {
-        $t = $t*7;//一周
-        $mem = new Memcache;
-        $mem->connect('127.0.0.1',11211);
-        return $mem->set($key, $val, $flag,$t);
-    }
-    //替换memcache
-    public function replacemem($key, $val, $flag=false, $t=86400)
-    {
-        $t = $t*7;//一周
-        $mem = new Memcache;
-        $mem->connect('127.0.0.1',11211);
-        return $mem->replace($key, $val, $flag,$t);
-    }
     
-    //php跳转
-    public function gotourl($t=0, $url='/')
-    {
-        $url = "http://".$_SERVER['HTTP_HOST']."/".$url;
-        if($t==0){
-            $go = "Location:".$url;
-        }else{
-            $go = "refresh:".$t.";url=".$url;
+    public function get($key, $filter = TRUE) {
+        if ($filter) {
+            return filterStr($this ->getRequest() ->get($key));
+        } else {
+            return $this ->getRequest() ->get($key);
         }
-        header($go);
-        exit;
-    }
-    
-    public function getSession($key)
-    {
-        return Yaf_Session::getInstance()->__get($key);
     }
 
-    public function setSession($key, $val)
-    {
-        return Yaf_Session::getInstance()->__set($key, $val);
+    public function getPost($key, $filter = TRUE) {
+        if ($filter) {
+            return filterStr($this ->getRequest() ->getPost($key));
+        } else {
+            return $this ->getRequest() ->getPost($key);
+        }
     }
 
-    public function unsetSession($key)
-    {
-        return Yaf_Session::getInstance()->__unset($key);
+    public function getParam($key, $filter = TRUE) {
+        if ($this ->getRequest() ->isGet()) {
+            if ($filter) {
+                return filterStr($this ->getRequest() ->get($key));
+            } else {
+                return $this ->getRequest() ->get($key);
+            }
+        } else {
+            if ($filter) {
+                return filterStr($this ->getRequest() ->getPost($key));
+            } else {
+                return $this ->getRequest() ->getPost($key);
+            }
+        }
     }
-    
-    public function clearCookie($key)
-    {
-        //echo $key."<br>";
-        putCookie($key,'',time()-3600,'/');
-    }
-
-    public function putCookie($key, $value, $expire = 3600, $path = '/', $domain = '', $httpOnly = FALSE)
-    {
-        putCookie($key, $value, time() + $expire, $path, $domain, $httpOnly);
-    }
-
-    public function getCookie($key)
-    {
-        //echo $key;exit;
-        return trim($_COOKIE[$key]);
-    }
-    */
 }

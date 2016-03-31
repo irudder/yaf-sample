@@ -11,11 +11,14 @@
             .menu li a{color:blue; text-decoration:none}
             .menu li a:hover{color:white}
         </style>
+        <link href="/public/css/bootstrap.min.css" rel="stylesheet" type='text/css'>
+        <script src='/public/js/jquery.js'></script>
+        <script src='/public/js/bootstrap.min.js'></script>
     </head>
     <body>
         <div class='top'>
             <span >你好<b style='color:red'><?php echo $user;?></b>,欢迎登录你的管理后台</span>
-            <a href="/user/logout" class='logout'>退出</a>
+            <a href="/index.php/admin" class='logout'>支付管理后台</a><a href="/user/logout" class='logout'>退出</a>
         </div>
         <!--
         <div style="widht:100px;height:730px;background-color: rgba(0, 0, 0, 0.63); float:left; overflow:hidden">

@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title><?php echo $title?></title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link href="/public/css/bootstrap.min.css" rel="stylesheet" type='text/css'>
+        <script src='/public/js/jquery.js'></script>
+        <script src='/public/js/Chart.min.js'></script>
+        <script src='/public/js/bootstrap.min.js'></script>
+    </head>
+    <body>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="#">支付管理</a>
+                <ul class="nav nav-pills">
+                    <li class="active" id="droptest1">
+                        <a id="droptest1" href="#droptest1" role="button" class="dropdown-toggle" data-toggle="dropdown">信息管理<b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu" aria-labeledby="droptest1">
+                            <li><a href="/index.php/admin">银行信息管理</a></li>
+                            <li><a href="/index.php/admin/payinfo">支付商信息管理</a></li>
+                            <li><a href="/index.php/admin/userinfo">用户信息管理</a></li>
+                            <li><a href="/index.php/admin/ordertype">订单类型管理</a></li>
+                            <li><a href="/index.php/admin/orderlist">订单列表</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/index.php/admin/addcontact">支付关系管理</a></li>
+                        </ul>                    
+                    </li>
+                    <li class="dropdown" id="droptest">
+                        <a id="droptest" href="#droptest" role="button" class="dropdown-toggle" data-toggle="dropdown">统计图表<b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu" aria-labeledby="droptest">
+                            <li><a href="/Statistics">支付商报表</a></li>
+                            <li><a href="/Statistics/paybank">支付银行报表</a></li>
+                            <li><a href="/Statistics/ordertime">时间报表</a></li>
+                        </ul>
+                    </li>
+                    <!--<li><a href="#">Link</a></li>-->
+                </ul>
+            </div>
+        </div>
+
+      

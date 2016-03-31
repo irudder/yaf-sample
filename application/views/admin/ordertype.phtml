@@ -1,0 +1,16 @@
+<?php include "common/head.html";?>
+<div class='container'>
+    <div><a href='/index.php/admin/addtype'><button class='btn btn-primary'>新增订单类型</button></a></div>
+    <table class="table table-bordered table-striped table-hover">
+        <tr class="success">
+            <td>订单类型名</td>
+            <td>编辑</td>
+        </tr>
+        
+        <?php foreach($data as $key=>$val){ 
+                echo "<tr><td>".$val['type']."</td><td><a href='/index.php/admin/edittype/typeid/{$val["id"]}'<button class='btn'>编辑</button></a></td></tr>";
+            } 
+        ?>
+    </table>
+</div>
+<?php include "common/foot.html";?>
